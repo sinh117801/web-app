@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -57,6 +57,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   /** Provisioning entry id. */
   provisioningEntryId: string;
   /** Provisioning entry. */
@@ -112,11 +116,7 @@ export class ViewProvisioningEntryComponent implements OnInit, AfterViewInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    */
-  constructor(
-    private accountingService: AccountingService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor() {
     this.route.data.subscribe(
       (data: {
         provisioningEntry: any;

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   MatTable,
@@ -56,6 +56,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class IdentitiesTabComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private clientService = inject(ClientsService);
+  private translateService = inject(TranslateService);
+
   /** Client Identities */
   clientIdentities: any;
   /** Client Identifier Template */
@@ -81,12 +86,7 @@ export class IdentitiesTabComponent {
    * @param {MatDialog} dialog Mat Dialog
    * @param {ClientsService} clientService Clients Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private clientService: ClientsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.clientId = this.route.parent.snapshot.paramMap.get('clientId');
     this.route.data.subscribe((data: { clientIdentities: any; clientIdentifierTemplate: any }) => {
       this.clientIdentities = data.clientIdentities;

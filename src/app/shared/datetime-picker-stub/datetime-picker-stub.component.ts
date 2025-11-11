@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
 
 /* eslint-disable @angular-eslint/component-selector */
- 
+
 @Component({
   selector: 'ngx-mat-datetime-picker',
   template: `

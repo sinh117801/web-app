@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ElementRef, ViewChild, AfterViewInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import * as _ from 'lodash';
@@ -50,6 +50,13 @@ interface SubmitPermissionData {
   ]
 })
 export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private systemService = inject(SystemService);
+  private formBuilder = inject(UntypedFormBuilder);
+  private router = inject(Router);
+  private configurationWizardService = inject(ConfigurationWizardService);
+  private popoverService = inject(PopoverService);
+
   permissionsData: Permission[] = [];
   groupings: string[] = [];
   currentGrouping = '';
@@ -82,14 +89,7 @@ export class ConfigureMakerCheckerTasksComponent implements OnInit, AfterViewIni
    * @param {ConfigurationWizardService} configurationWizardService ConfigurationWizard Service.
    * @param {PopoverService} popoverService PopoverService.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private systemService: SystemService,
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private configurationWizardService: ConfigurationWizardService,
-    private popoverService: PopoverService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { permissions: any }) => {
       this.permissionsData = data.permissions;
     });

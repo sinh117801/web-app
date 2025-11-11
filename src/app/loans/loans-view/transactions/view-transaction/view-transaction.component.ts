@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -71,6 +71,16 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewTransactionComponent implements OnInit {
+  private loansService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+  private settingsService = inject(SettingsService);
+  private organizationService = inject(OrganizationService);
+  private alertService = inject(AlertService);
+
   /** Transaction data. */
   transactionData: any;
   transactionType: LoanTransactionType;
@@ -106,17 +116,7 @@ export class ViewTransactionComponent implements OnInit {
    * @param {SettingsService} settingsService Settings Service
    * @param {AlertService} alertService Alert Service
    */
-  constructor(
-    private loansService: LoansService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-    private settingsService: SettingsService,
-    private organizationService: OrganizationService,
-    private alertService: AlertService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { loansAccountTransaction: any }) => {
       this.transactionData = data.loansAccountTransaction;
       this.transactionType = this.transactionData.type;

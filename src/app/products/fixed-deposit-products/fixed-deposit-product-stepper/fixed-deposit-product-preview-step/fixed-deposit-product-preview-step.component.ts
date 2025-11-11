@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, inject } from '@angular/core';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { Accounting } from 'app/core/utils/accounting';
 import { OptionData } from 'app/shared/models/option-data.model';
@@ -59,6 +59,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositProductPreviewStepComponent implements OnInit, OnChanges {
+  private accounting = inject(Accounting);
+
   @Input() fixedDepositProductsTemplate: any;
   @Input() chartSlabsDisplayedColumns: any[];
   @Input() accountingRuleData: any;
@@ -93,8 +95,6 @@ export class FixedDepositProductPreviewStepComponent implements OnInit, OnChange
 
   accountingMappings: any = {};
   accountingRule: OptionData;
-
-  constructor(private accounting: Accounting) {}
 
   ngOnInit() {
     this.setCurrentValues();

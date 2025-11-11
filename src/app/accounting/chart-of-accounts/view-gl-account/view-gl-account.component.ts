@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -29,6 +29,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewGlAccountComponent {
+  private accountingService = inject(AccountingService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private location = inject(Location);
+
   /** GL Account. */
   glAccount: any;
 
@@ -39,13 +45,7 @@ export class ViewGlAccountComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private accountingService: AccountingService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog,
-    private location: Location
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { glAccountAndChartOfAccountsTemplate: any }) => {
       this.glAccount = data.glAccountAndChartOfAccountsTemplate;
     });

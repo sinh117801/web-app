@@ -1,6 +1,6 @@
 /** Angular Imports */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   UntypedFormArray,
   UntypedFormBuilder,
@@ -80,6 +80,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositProductInterestRateChartStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   @Input() fixedDepositProductsTemplate: any;
 
   fixedDepositProductInterestRateChartForm: UntypedFormGroup;
@@ -119,13 +125,7 @@ export class FixedDepositProductInterestRateChartStepComponent implements OnInit
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createFixedDepositProductInterestRateChartForm();
   }
 

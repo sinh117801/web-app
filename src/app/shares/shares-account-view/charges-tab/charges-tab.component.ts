@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatTableDataSource,
   MatTable,
@@ -42,6 +42,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Shares Account Data */
   sharesAccountData: any;
   /** Charges Data */
@@ -65,7 +67,7 @@ export class ChargesTabComponent implements OnInit {
    * Retrieves shares account aata from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.parent.data.subscribe((data: { sharesAccountData: any }) => {
       this.sharesAccountData = data.sharesAccountData;
       this.chargesData = this.sharesAccountData.charges;

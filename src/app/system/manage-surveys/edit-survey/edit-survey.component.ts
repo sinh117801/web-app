@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -46,6 +46,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class EditSurveyComponent {
+  private formBuilder = inject(UntypedFormBuilder);
+  private systemService = inject(SystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   /** Survey form. */
   surveyForm: UntypedFormGroup;
 
@@ -56,13 +62,7 @@ export class EditSurveyComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private systemService: SystemService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.createSurveyForm();
     this.route.data.subscribe((data: { survey: any }) => {
       this.prepareSurveyForm(data.survey);

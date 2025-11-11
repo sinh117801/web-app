@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -7,10 +7,8 @@ import { AuthService } from '../auth.service';
   templateUrl: './callback.component.html'
 })
 export class CallbackComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private authService: AuthService
-  ) {}
+  private route = inject(ActivatedRoute);
+  private authService = inject(AuthService);
 
   ngOnInit(): void {
     let code = localStorage.getItem('auth_code');

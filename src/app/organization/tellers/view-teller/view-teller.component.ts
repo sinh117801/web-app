@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -28,6 +28,11 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ViewTellerComponent {
+  private organizationService = inject(OrganizationService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   /** Teller data. */
   tellerData: any;
 
@@ -38,12 +43,7 @@ export class ViewTellerComponent {
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
-  constructor(
-    private organizationService: OrganizationService,
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { teller: any }) => {
       this.tellerData = data.teller;
     });

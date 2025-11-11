@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
@@ -70,18 +70,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientsViewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private clientsService = inject(ClientsService);
+  private _sanitizer = inject(DomSanitizer);
+  dialog = inject(MatDialog);
+
   clientViewData: any;
   clientDatatables: any;
   clientImage: any;
   clientTemplateData: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private clientsService: ClientsService,
-    private _sanitizer: DomSanitizer,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { clientViewData: any; clientTemplateData: any; clientDatatables: any }) => {
       this.clientViewData = data.clientViewData;
       this.clientDatatables = data.clientDatatables;

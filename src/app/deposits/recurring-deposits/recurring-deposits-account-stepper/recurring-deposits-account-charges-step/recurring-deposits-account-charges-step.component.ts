@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, inject } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -61,6 +61,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnChanges {
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   @Input() recurringDepositsAccountTemplate: any;
   @Input() recurringDepositsAccountProductTemplate: any;
   @Input() currencyCode: UntypedFormControl;
@@ -86,12 +90,6 @@ export class RecurringDepositsAccountChargesStepComponent implements OnInit, OnC
   isChargesPatched = false;
   /** Currency Code */
   currency: Currency | null = null;
-
-  constructor(
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {}
 
   ngOnInit() {
     this.chargesDataSource = [];

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -62,6 +62,14 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
+  private savingsService = inject(SavingsService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   /** Savings Account Data */
   savingsAccountData: any;
   /** Charges Data */
@@ -97,15 +105,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils.
    * @param {SettingsService} settingsService Setting service
    */
-  constructor(
-    private savingsService: SavingsService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.savingsAccountData = data.savingsAccountData;
       this.chargesData = this.savingsAccountData.charges;

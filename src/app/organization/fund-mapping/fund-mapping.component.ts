@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
 import {
@@ -59,6 +59,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FundMappingComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private organizationService = inject(OrganizationService);
+  private settingsService = inject(SettingsService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+
   /** Minimum Date allowed. */
   minDate = new Date(2000, 0, 1);
   /** Maximum Date allowed. */
@@ -94,13 +100,7 @@ export class FundMappingComponent implements OnInit {
    * @param {Router} router Router for navigation.
    * @param {Dates} dateUtils Date Utils to format date.
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private organizationService: OrganizationService,
-    private settingsService: SettingsService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { advanceSearchTemplate: any }) => {
       this.advanceSearchTemplate = data.advanceSearchTemplate;
     });

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -61,6 +61,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TransactionsTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+
   accountId: string;
   status: any;
   /** Transactions Data */
@@ -89,11 +93,7 @@ export class TransactionsTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { fixedDepositsAccountData: any }) => {
       this.transactionsData = data.fixedDepositsAccountData.transactions;
       this.accountId = this.route.parent.snapshot.params['fixedDepositAccountId'];

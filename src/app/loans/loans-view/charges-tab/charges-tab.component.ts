@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -65,6 +65,15 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ChargesTabComponent implements OnInit {
+  private loansService = inject(LoansService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+  dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private systemService = inject(SystemService);
+
   /** Loan Details Data */
   loanDetails: any;
   /** Charges Data */
@@ -99,16 +108,7 @@ export class ChargesTabComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private loansService: LoansService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    private translateService: TranslateService,
-    public dialog: MatDialog,
-    private settingsService: SettingsService,
-    private systemService: SystemService
-  ) {
+  constructor() {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
     });

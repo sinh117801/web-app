@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Datatables } from 'app/core/utils/datatables';
@@ -39,26 +39,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class DatatableSingleRowComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+  private datatables = inject(Datatables);
+  private systemService = inject(SystemService);
+
   @Input() dataObject: any;
   @Input() entityId: string;
   @Input() entityType: string;
   datatableName: string;
-
-  /**
-   * @param {ActivatedRoute} route Activated Route.
-   * @param {Dates} dateUtils Date Utils.
-   * @param {SystemService} systemService System Service.
-   * @param {SettingsService} settingsService Settings Service
-   * @param {Datatables} datatables Datatable utils
-   */
-  constructor(
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private dialog: MatDialog,
-    private settingsService: SettingsService,
-    private datatables: Datatables,
-    private systemService: SystemService
-  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((routeParams: any) => {

@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortHeader } from '@angular/material/sort';
@@ -73,6 +73,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class TransactionsTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private savingsService = inject(SavingsService);
+  private settingsService = inject(SettingsService);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+
   /** Savings Account Status */
   status: any;
   /** Transactions Data */
@@ -105,14 +112,7 @@ export class TransactionsTabComponent implements OnInit {
    * Retrieves savings account data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private savingsService: SavingsService,
-    private settingsService: SettingsService,
-    private dialog: MatDialog,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.parent.parent.data.subscribe((data: { savingsAccountData: any }) => {
       this.transactionsData = data.savingsAccountData.transactions;
       this.status = data.savingsAccountData.status.value;

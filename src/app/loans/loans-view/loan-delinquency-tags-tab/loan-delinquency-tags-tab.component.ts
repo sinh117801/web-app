@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -60,6 +60,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class LoanDelinquencyTagsTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private loansServices = inject(LoansService);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+  dialog = inject(MatDialog);
+
   loanDelinquencyTags: LoanDelinquencyTags[] = [];
   loanDelinquencyActions: LoanDelinquencyAction[] = [];
   currentLoanDelinquencyAction: LoanDelinquencyAction | null;
@@ -89,14 +96,7 @@ export class LoanDelinquencyTagsTabComponent implements OnInit {
   locale: string;
   dateFormat: string;
 
-  constructor(
-    private route: ActivatedRoute,
-    private loansServices: LoansService,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private translateService: TranslateService,
-    public dialog: MatDialog
-  ) {
+  constructor() {
     this.loanId = this.route.parent.parent.snapshot.params['loanId'];
 
     this.route.parent.data.subscribe(

@@ -1,5 +1,5 @@
 /** Angular Imports. */
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -25,15 +25,17 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ErrorDialogComponent {
+  dialogRef = inject<MatDialogRef<ErrorDialogComponent>>(MatDialogRef);
+  data = inject(MAT_DIALOG_DATA);
+
   showAsCode = false;
   /**
    * @param {MatDialogRef} dialogRef Component reference to dialog.
    * @param {any} data Provides any data.
    */
-  constructor(
-    public dialogRef: MatDialogRef<ErrorDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.showAsCode = data.startsWith('<pre><code>');
   }
 }

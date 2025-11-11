@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -79,6 +79,12 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositProductInterestRateChartStepComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+  private translateService = inject(TranslateService);
+
   @Input() recurringDepositProductsTemplate: any;
 
   recurringDepositProductInterestRateChartForm: UntypedFormGroup;
@@ -118,13 +124,7 @@ export class RecurringDepositProductInterestRateChartStepComponent implements On
    * @param {SettingsService} settingsService Settings Service.
    */
 
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    public dialog: MatDialog,
-    private dateUtils: Dates,
-    private settingsService: SettingsService,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.createrecurringDepositProductInterestRateChartForm();
   }
 

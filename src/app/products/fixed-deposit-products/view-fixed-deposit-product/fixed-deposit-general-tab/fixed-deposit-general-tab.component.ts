@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { trigger, state, transition, animate, style } from '@angular/animations';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -56,6 +56,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class FixedDepositGeneralTabComponent {
+  private route = inject(ActivatedRoute);
+
   /** Fixed Deposit Product data. */
   fixedDepositProductData: any;
   fixedDepositProductsTemplate: any;
@@ -95,7 +97,7 @@ export class FixedDepositGeneralTabComponent {
    * Retrieves the fixed deposit product data from `resolve`.
    * @param {ActivatedRoute} route Activated Route.
    */
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.data.subscribe((data: { fixedDepositProduct: any; fixedDepositProductsTemplate: any }) => {
       this.fixedDepositProductData = data.fixedDepositProduct;
       this.fixedDepositProductsTemplate = data.fixedDepositProductsTemplate;

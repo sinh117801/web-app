@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -37,6 +37,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class CreateChargeComponent implements OnInit {
+  private formBuilder = inject(UntypedFormBuilder);
+  private productsService = inject(ProductsService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private dateUtils = inject(Dates);
+  private settingsService = inject(SettingsService);
+
   /** Charge form. */
   chargeForm: UntypedFormGroup;
   /** Charges template data. */
@@ -65,14 +72,7 @@ export class CreateChargeComponent implements OnInit {
    * @param {Dates} dateUtils Date Utils to format date.
    * @param {SettingsService} settingsService Settings Service
    */
-  constructor(
-    private formBuilder: UntypedFormBuilder,
-    private productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dateUtils: Dates,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
       if (data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions) {

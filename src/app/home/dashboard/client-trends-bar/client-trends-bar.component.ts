@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UntypedFormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -36,6 +36,10 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientTrendsBarComponent implements OnInit {
+  private homeService = inject(HomeService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+
   /** Static Form control for office Id */
   officeId = new UntypedFormControl();
   /** Static Form control for time scale */
@@ -53,11 +57,7 @@ export class ClientTrendsBarComponent implements OnInit {
    * @param {ActivatedRoute} route Activated Route
    * @param {Dates} dateUtils Date Utils
    */
-  constructor(
-    private homeService: HomeService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { offices: any }) => {
       this.officeData = data.offices;
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   MatTableDataSource,
@@ -42,6 +42,8 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class GeneralTabComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+
   /** Currency Code */
   currencyCode: string;
   loanDetails: any;
@@ -78,7 +80,7 @@ export class GeneralTabComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   detailsDataSource: MatTableDataSource<any>;
 
-  constructor(private route: ActivatedRoute) {
+  constructor() {
     this.route.parent.data.subscribe((data: { loanDetailsData: any }) => {
       this.loanDetails = data.loanDetailsData;
       this.currencyCode = this.loanDetails.currency.code;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Dates } from 'app/core/utils/dates';
@@ -26,18 +26,18 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class SavingsTransactionGeneralTabComponent {
+  private savingsService = inject(SavingsService);
+  private route = inject(ActivatedRoute);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  dialog = inject(MatDialog);
+  private settingsService = inject(SettingsService);
+
   accountId: string;
   transactionId: string;
   transactionData: any;
 
-  constructor(
-    private savingsService: SavingsService,
-    private route: ActivatedRoute,
-    private dateUtils: Dates,
-    private router: Router,
-    public dialog: MatDialog,
-    private settingsService: SettingsService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { savingsAccountTransaction: any }) => {
       this.accountId = this.route.parent.snapshot.params['savingAccountId'];
       this.transactionData = data.savingsAccountTransaction;

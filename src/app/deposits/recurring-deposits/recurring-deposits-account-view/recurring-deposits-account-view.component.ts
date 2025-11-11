@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLinkActive, RouterLink, RouterOutlet } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -67,6 +67,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class RecurringDepositsAccountViewComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private recurringDepositsService = inject(RecurringDepositsService);
+  private savingsService = inject(SavingsService);
+  dialog = inject(MatDialog);
+  private translateService = inject(TranslateService);
+
   /** RecurringDeposits Account Data */
   recurringDepositsAccountData: any;
   /** Button Configuration */
@@ -86,14 +93,7 @@ export class RecurringDepositsAccountViewComponent implements OnInit {
    * @param {Router} router Router
    * @param {RecurringDepositsService} recurringDepositsService RecurringDeposits Service
    */
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private recurringDepositsService: RecurringDepositsService,
-    private savingsService: SavingsService,
-    public dialog: MatDialog,
-    private translateService: TranslateService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { recurringDepositsAccountData: any; savingsDatatables: any }) => {
       this.recurringDepositsAccountData = data.recurringDepositsAccountData;
       this.charges = this.recurringDepositsAccountData.charges;

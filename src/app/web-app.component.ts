@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit, HostListener, HostBinding, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener, HostBinding, OnDestroy, inject } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -88,42 +88,26 @@ registerLocaleData(localeSW);
   standalone: false
 })
 export class WebAppComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private titleService = inject(Title);
+  private translateService = inject(TranslateService);
+  private themeStorageService = inject(ThemeStorageService);
+  snackBar = inject(MatSnackBar);
+  private alertService = inject(AlertService);
+  private settingsService = inject(SettingsService);
+  private authenticationService = inject(AuthenticationService);
+  private themingService = inject(ThemingService);
+  private dateUtils = inject(Dates);
+  private idle = inject(IdleTimeoutService);
+  private dialog = inject(MatDialog);
+  private authService = inject(AuthService);
+
   buttonConfig: KeyboardShortcutsConfiguration;
 
   i18nService: I18nService;
 
   private authSubscription: Subscription;
-
-  /**
-   * @param {Router} router Router for navigation.
-   * @param {ActivatedRoute} activatedRoute Activated Route.
-   * @param {Title} titleService Title Service.
-   * @param {TranslateService} translateService Translate Service.
-   * @param {ThemeStorageService} themeStorageService Theme Storage Service.
-   * @param {MatSnackBar} snackBar Material Snackbar for notifications.
-   * @param {AlertService} alertService Alert Service.
-   * @param {SettingsService} settingsService Settings Service.
-   * @param {AuthenticationService} authenticationService Authentication service.
-   * @param {Dates} dateUtils Dates service.
-   * @param {IdleTimeoutService} idle Idle timeout service.
-   * @param {MatDialog} dialog Dialog component.
-   */
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private titleService: Title,
-    private translateService: TranslateService,
-    private themeStorageService: ThemeStorageService,
-    public snackBar: MatSnackBar,
-    private alertService: AlertService,
-    private settingsService: SettingsService,
-    private authenticationService: AuthenticationService,
-    private themingService: ThemingService,
-    private dateUtils: Dates,
-    private idle: IdleTimeoutService,
-    private dialog: MatDialog,
-    private authService: AuthService
-  ) {}
 
   @HostBinding('class') public cssClass: string;
 

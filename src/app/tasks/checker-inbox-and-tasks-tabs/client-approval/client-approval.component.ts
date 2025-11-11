@@ -1,5 +1,5 @@
 /** Angular Imports */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _ from 'lodash';
@@ -56,6 +56,13 @@ import { STANDALONE_SHARED_IMPORTS } from 'app/standalone-shared.module';
   ]
 })
 export class ClientApprovalComponent {
+  private route = inject(ActivatedRoute);
+  private dialog = inject(MatDialog);
+  private dateUtils = inject(Dates);
+  private router = inject(Router);
+  private settingsService = inject(SettingsService);
+  private tasksService = inject(TasksService);
+
   /** Grouped Clients Data */
   groupedClients: any;
   /** Checks to show the data */
@@ -83,14 +90,7 @@ export class ClientApprovalComponent {
    * @param {SettingsService} settingsService Settings Service.
    * @param {TasksService} tasksService Tasks Service.
    */
-  constructor(
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dateUtils: Dates,
-    private router: Router,
-    private settingsService: SettingsService,
-    private tasksService: TasksService
-  ) {
+  constructor() {
     this.route.data.subscribe((data: { groupedClientData: any }) => {
       this.groupedClients = _.groupBy(data.groupedClientData.pageItems, 'officeName');
       if (Object.keys(this.groupedClients).length) {
