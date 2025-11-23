@@ -2,18 +2,18 @@
 # For additional information regarding the format and rule options, please see:
 # https://github.com/browserslist/browserslist#queries
 
-last 2 versions
-> 0.5%
-Firefox ESR
-not dead
-not kaios 2.5
-not op_mini all
-not and_qq 14.9
-not and_uc 15.5
-not android 141
-not kaios 3.0-3.1
-not op_mob 80
-not opera 122
-not opera 121
-not samsung 28
-not samsung 27
+last 5 versions
+> 50%
+# Firefox ESR
+# not dead
+# not kaios 2.5
+# not op_mini all
+# not and_qq 14.9
+# not and_uc 15.5
+# not android 142
+# not kaios 3.0-3.1
+# not op_mob 80
+# not opera 122
+# not opera 121
+# not samsung 28
+# not samsung 27
